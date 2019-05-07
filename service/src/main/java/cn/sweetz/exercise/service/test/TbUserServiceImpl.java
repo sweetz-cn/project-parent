@@ -1,6 +1,8 @@
 package cn.sweetz.exercise.service.test;
 
 import cn.sweetz.exercise.common.defined.JsonResult;
+import cn.sweetz.exercise.common.defined.constants.CommonErrorConstant;
+import cn.sweetz.exercise.common.defined.exception.BizException;
 import cn.sweetz.exercise.dao.entity.TbUser;
 import cn.sweetz.exercise.dao.mapper.TbUserMapper;
 import cn.sweetz.exercise.service.test.vo.TbUserVo;
@@ -15,8 +17,7 @@ public class TbUserServiceImpl implements TbUserService {
     private TbUserMapper tbUserMapper;
 
     @Override
-    public JsonResult<TbUserVo> selectById(Integer id) {
-
+    public JsonResult<TbUserVo> selectById(Integer id){
         TbUser tbUser = tbUserMapper.selectByPrimaryKey(id);
         TbUserVo vo = new TbUserVo();
         BeanUtils.copyProperties(tbUser , vo);

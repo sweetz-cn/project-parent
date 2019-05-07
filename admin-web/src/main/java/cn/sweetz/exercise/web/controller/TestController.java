@@ -1,6 +1,8 @@
 package cn.sweetz.exercise.web.controller;
 
 import cn.sweetz.exercise.common.defined.JsonResult;
+import cn.sweetz.exercise.common.defined.constants.CommonErrorConstant;
+import cn.sweetz.exercise.common.defined.exception.BizException;
 import cn.sweetz.exercise.service.test.TbUserService;
 import cn.sweetz.exercise.service.test.vo.TbUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class TestController {
 
     @GetMapping("/select/{id}")
     public JsonResult<TbUserVo> selectById(@PathVariable("id")Integer id){
-        return tbUserService.selectById(id);
+        JsonResult<TbUserVo> jsonResult = tbUserService.selectById(id);
+        return jsonResult;
     }
 }
