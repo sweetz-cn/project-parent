@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<Configuration status="INFO">
+    <!-- 全局参数 -->
+    <Properties>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}.%M %L - %msg%n</Property>
+        <Property name="displayName">exercise-parent</Property>
+        <property name="LOG_HOME">E:/logs</property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+        </Console>
+        <File name="all_error" fileName="${LOG_HOME}/error/${displayName}_error.log" append="true">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+        </File>
+
+        <RollingRandomAccessFile name="rollingFile" fileName="${LOG_HOME}/rolling/${displayName}_file.log"
+                                 filePattern="${LOG_HOME}/rolling/$${date:yyyy-MM-dd}/${displayName}_file-%d{yyyy-MM-dd}-%i.log" >
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="all_error" />
+            <AppenderRef ref="rollingFile" />
+        </Root>
+        <Logger name="org.springframework" level="WARN" />
+        <Logger name="cn.sweetz.personal" level="DEBUG" />
+    </Loggers>
+</Configuration>
